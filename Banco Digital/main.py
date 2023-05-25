@@ -1,55 +1,44 @@
 import os
+import UOW as uow
 
-import Conta as Conta
-import Conta as Conta
+os.system("cls")
 
-import Conta as Conta
-
-class ORM:
-    def __init__(self):
-        pass
-
-    def create(self, conta, nome, renda, debito, saldo, orm):
-        conta = Conta(conta, nome, renda, debito, saldo, orm)
-        return conta
-
-    def read(self, id):
-        ...
-
-    def update(self, entity):
-        ...
-    
-    def delete(self, entity):
-        ...
-
-    def list(self):
-        ...
-import Banco as banco
-import Conta
-
-controler = ORM()
-
-users = [controler.list]
+def func():
+    pass
 
 loop = True
+
+def close_loop():
+    global loop
+    loop = False
+
+command_list = [
+    ('x', close_loop),
+    ('list', uow.Listar),
+    ('add', uow.Criar),
+    ('get', uow.Ler),
+    ('upd', uow.Atualizar),
+    ('del', uow.Deletar)
+]
+
 while(loop):
-    os.system("cls")
+    
     print("===========================")
     print("Digite o comando:")
 
     cmd = input(">>> ")
-    cmd.lower()
-    cmd.split()
+    cmd = cmd.lower()
+    cmd = cmd.split()
 
-    if(cmd[0] == 'x'):
-        loop = False
-
-    if(cmd[0] == "add"):
-        conta = int(cmd[1])
-        nome = cmd[2]
-        renda = int(cmd[3])
-        saldo = int(cmd[4])
-        orm = controler
-        users.append(controler.Create(conta, nome, renda, saldo, orm))
-
-    m = input()
+    for command in command_list:
+        if(command[0] == cmd[0]):
+            function = command[1]
+            if (len(cmd) > 1):
+                args = " ".join(cmd[1:])
+                print(args)
+                function(args)
+            else:                
+                function()
+            break
+    else:
+        print("Comando Inexistente!")

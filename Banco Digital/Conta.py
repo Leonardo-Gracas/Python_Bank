@@ -1,15 +1,13 @@
 import ORM
 
 class Conta:
-    def __init__(self, conta, nome, renda, saldo, orm):
-        self.Nome = nome
+    def __init__(self, conta, nome, renda, saldo, orm, debito=0):
         self.Conta = conta
+        self.Nome = nome.capitalize()
         self.Renda = renda
-        self.Debito = 0
+        self.Debito = debito
         self.Saldo = saldo
         self.ORM = orm
-
-        self.Apresentar()
 
     def Sacar(self, quantia):
         if(self.Saldo < 0):
@@ -67,4 +65,4 @@ class Conta:
             self.Sacar(self.Debito)
 
     def Apresentar(self):
-        print(f'{self.Conta} - {self.Nome} - {self.Saldo} - {self.Renda} - {self.Debito}')
+        print(f'{self.Conta}- {self.Nome}.\nSaldo: R${self.Saldo}\nRenda mensal: R${self.Renda}')

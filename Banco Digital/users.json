@@ -1,0 +1,37 @@
+[
+  {
+    "conta": 100,
+    "nome": "Leo",
+    "saldo": 0,
+    "renda": 20,
+    "debito": 0
+  },
+  {
+    "conta": 101,
+    "nome": "Mari",
+    "saldo": 0,
+    "renda": 3000,
+    "debito": 0
+  },
+  {
+    "conta": 102,
+    "nome": "Lucas",
+    "saldo": 0,
+    "renda": 3006,
+    "debito": 0
+  },
+  {
+    "conta": 103,
+    "nome": "Leo",
+    "saldo": 0,
+    "renda": 10000,
+    "debito": 0
+  },
+  {
+    "conta": 104,
+    "nome": "Felipe",
+    "saldo": 0,
+    "renda": 4000,
+    "debito": 0
+  }
+]
