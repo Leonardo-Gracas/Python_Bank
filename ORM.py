@@ -1,5 +1,17 @@
 from Conta import Conta as Conta
 import json
+import os
+
+
+# Obter o caminho completo do arquivo atualmente em execução
+caminho_atual = os.path.abspath(__file__)
+
+# Extrair o diretório pai do caminho do arquivo
+diretorio_atual = os.path.dirname(caminho_atual)
+
+# Combinar o diretório atual com o nome do arquivo JSON
+caminho_arquivo = os.path.join(diretorio_atual, 'users.json')
+
 
 def user_to_json(user):
     obj = {
@@ -21,7 +33,7 @@ class ORM:
         pass
 
     def get_new_id():
-        with open('system.json', 'r+') as system:
+        with open(caminho_arquivo, 'r+') as system:
             obj = json.loads(system.read())
             obj['id_fabric'] += 1
             conta = obj['id_fabric']
@@ -33,7 +45,7 @@ class ORM:
     def create(conta, nome, renda, saldo):
         user = Conta(conta, nome, renda, saldo)
         
-        with open('users.json', 'r+') as f:
+        with open(caminho_arquivo, 'r+') as f:
             newUser = user_to_json(user)
             obj = json.loads(f.read())
             obj.append(newUser)
@@ -45,7 +57,7 @@ class ORM:
         return user
 
     def read(id):
-        with open('users.json', 'r') as f:
+        with open(caminho_arquivo, 'r') as f:
             obj = json.loads(f.read())
             for user in obj:
                 if(user['conta'] == id):
@@ -56,7 +68,7 @@ class ORM:
                 return False
 
     def update(users):
-        with open('users.json', 'w') as f:
+        with open(caminho_arquivo, 'w') as f:
             newData = [user_to_json(user) for user in users]
             f.seek(0)
             f.write(json.dumps(newData, indent=2))
@@ -64,7 +76,7 @@ class ORM:
 
     def delete(id):
         old_user = ''
-        with open('users.json', 'r+') as f:
+        with open(caminho_arquivo, 'r+') as f:
             obj = json.loads(f.read())
             for user in obj:
                 if(user['conta'] == id):
@@ -79,7 +91,7 @@ class ORM:
 
     def list():
         resp = []
-        with open('users.json', 'r') as f:
+        with open(caminho_arquivo, 'r') as f:
             obj = json.loads(f.read())
             for user_json in obj:
                 resp.append(json_to_user(user_json))
