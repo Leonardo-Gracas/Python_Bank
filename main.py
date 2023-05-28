@@ -1,45 +1,90 @@
+from flask import Flask, render_template, request, session
+import sys
 import os
-import UOW as uow
 
-os.system("cls")
+# Adicionar o caminho da pastas ao sys.path
+sys.path.append('ops')
 
-def func():
-    pass
+from ops import UOW as uow
 
-loop = True
+app = Flask(__name__)
+app.debug = True
+app.secret_key = 'sua_chave_secreta_aqui'
 
-def close_loop():
-    global loop
-    loop = False
+dados_json_path = os.path.join(os.path.dirname(__file__), 'dados.json')
 
-command_list = [
-    ('x', close_loop),
-    ('list', uow.Listar),
-    ('add', uow.Criar),
-    ('get', uow.Ler),
-    ('act', uow.Atualizar),
-    ('del', uow.Deletar)
-]
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-while(loop):
-    
-    print('#    #    #    #    #    #')
-    print("Digite o comando:")
 
-    cmd = input(">>> ")
-    cmd = cmd.lower()
-    cmd = cmd.split()
+# LOGIN 
 
-    for command in command_list:
-        if(command[0] == cmd[0]):
-            function = command[1]
-            if (len(cmd) > 1):
-                args = " ".join(cmd[1:])
-                function(args)
-            else:                
-                function()
-            break
+@app.route('/login', methods=['GET'])
+def login():
+    if(session.get('id_conta') is not None):
+        return render_template('conta.html')
     else:
-        print("Comando Inexistente!")
+        return render_template('login.html')
+
+@app.route('/login_process', methods=['POST'])
+def login_proc():
+    email = request.form['email']
+    password = request.form['password']
     
-    print('#    #    #    #    #    #')
+    # SE VERIFICAR CREDENCIAIS RETORNAR UM ID, É FEITO O LOGIN E A SESSÃO
+    id_conta = uow.verificar_credenciais(email, password)
+    if(id_conta != None):
+        session['id'] = id_conta
+        return render_template('conta.html')
+    
+    return '<script>alert("Email ou senha incorretos.");window.location="/login"</script>'
+
+
+# CADASTRO
+
+@app.route('/cadastro', methods=['GET'])
+def cadastro():
+    return render_template('cadastro.html')
+
+@app.route('/cadastro_process', methods=['POST'])
+def cadastro_proc():
+    f_name = request.form['f_name']
+    l_name = request.form['l_name']
+    cpf = request.form['cpf']
+    email = request.form['email']
+    password = request.form['password']
+
+    # SE CPF VÁLIDO TENTA CRIAR A CONTA
+    if (validar_cpf(cpf) == True):
+        retorno = uow.Criar(f_name, l_name, cpf, email, password)
+        
+        # VERIFICAÇÃO SE CPF E EMAIL JÁ ESTÃO CADASTRADOS
+        if retorno == True:
+            return render_template('login.html')
+        elif retorno == 'cpf':
+            return '<script>alert("CPF já cadastrado.");window.location="/cadastro"</script>'
+        elif retorno == 'email':
+            return '<script>alert("Email já cadastrado.");window.location="/cadastro"</script>'
+    else:
+        return '<script>alert("CPF inválido.");window.location="/cadastro"</script>'
+    
+# CONTA
+
+@app.route('/conta')
+def conta():
+    if session.get('id') is None:
+        return  '<script>alert("Usúario não logado.");window.location="/"</script>'
+    
+    return render_template('conta.html')
+
+@app.route('/deslogar/<delog>')
+def deslogar(delog):
+    if (delog == "True"):
+        session.clear()
+        
+    return render_template('index.html')
+
+
+if __name__ == '__main__':
+    app.run()
