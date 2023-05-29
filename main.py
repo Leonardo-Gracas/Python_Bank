@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
+from datetime import datetime, timedelta
 import hashlib
 import sys
 import os
@@ -11,6 +12,8 @@ from ops import ORM as orm
 
 
 app = Flask(__name__)
+date = datetime.now()
+
 app.debug = True
 app.secret_key = 'sua_chave_secreta_aqui'
 
@@ -18,7 +21,7 @@ dados_json_path = os.path.join(os.path.dirname(__file__), 'dados.json')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', date = date)
 
 
 # LOGIN 
@@ -85,6 +88,18 @@ def conta():
                 return render_template('conta.html', conta = conta)
             elif conta['funcao'] == "1":
                 return render_template('contaAdmin.html', conta = conta)
+           
+            
+@app.route('/timeFlow', methods = ["POST"])
+def passagemTempo():
+    global date
+    
+    if request.method == "POST":
+        data = request.form
+        days = int(data.get('days'))
+        
+        date = date + timedelta(days=days)
+        return redirect('/')
     
 
 @app.route('/deslogar/<delog>')
