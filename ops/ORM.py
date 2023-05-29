@@ -22,6 +22,7 @@ def user_to_json(user):
         "cpf" : user.Cpf,
         "email" : user.Email,
         "senha" : user.Senha,
+        "funcao" : "",
         "saldo": "",
         "renda": "",
         "debito": ""
@@ -35,7 +36,7 @@ def user_to_json(user):
 
 def json_to_user(json):
     user = Conta(json["conta"], json["p_nome"], json["u_nome"],
-                 json["cpf"], json["email"], json["senha"],
+                 json["cpf"], json["email"], json["senha"], json['funcao'],
                  json["renda"], json["saldo"], json["debito"]
                 )
     return user
@@ -55,8 +56,8 @@ class ORM:
             system.truncate()
         return conta
 
-    def create(id_conta, p_nome, u_nome, cpf, email, senha):
-        user = Conta(id_conta, p_nome, u_nome, cpf, email, senha)
+    def create(id_conta, p_nome, u_nome, cpf, email, senha, funcao = False):
+        user = Conta(id_conta, p_nome, u_nome, cpf, email, senha, funcao)
         
         with open(caminho_arquivo_users, 'r+') as f:
             newUser = user_to_json(user)

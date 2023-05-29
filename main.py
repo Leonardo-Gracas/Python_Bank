@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
+import hashlib
 import sys
 import os
 
@@ -6,6 +7,8 @@ import os
 sys.path.append('ops')
 
 from ops import UOW as uow
+from ops import ORM as orm
+
 
 app = Flask(__name__)
 app.debug = True
@@ -33,10 +36,10 @@ def login_proc():
     password = request.form['password']
     
     # SE VERIFICAR CREDENCIAIS RETORNAR UM ID, É FEITO O LOGIN E A SESSÃO
-    id_conta = uow.verificar_credenciais(email, password)
+    id_conta = uow.verificar_credenciais(email, hashlib.sha1(password.encode()).hexdigest())
     if(id_conta != None):
         session['id'] = id_conta
-        return render_template('conta.html')
+        return redirect('/conta')
     
     return '<script>alert("Email ou senha incorretos.");window.location="/login"</script>'
 
@@ -56,12 +59,12 @@ def cadastro_proc():
     password = request.form['password']
 
     # SE CPF VÁLIDO TENTA CRIAR A CONTA
-    if (validar_cpf(cpf) == True):
+    if (uow.validar_cpf(cpf) == True):
         retorno = uow.Criar(f_name, l_name, cpf, email, password)
         
         # VERIFICAÇÃO SE CPF E EMAIL JÁ ESTÃO CADASTRADOS
         if retorno == True:
-            return render_template('login.html')
+            return redirect('/login')
         elif retorno == 'cpf':
             return '<script>alert("CPF já cadastrado.");window.location="/cadastro"</script>'
         elif retorno == 'email':
@@ -76,14 +79,20 @@ def conta():
     if session.get('id') is None:
         return  '<script>alert("Usúario não logado.");window.location="/"</script>'
     
-    return render_template('conta.html')
+    for conta in orm.ORM.get_contas():
+        if conta['conta'] == session.get('id'):
+            if conta['funcao'] == "":
+                return render_template('conta.html', conta = conta)
+            elif conta['funcao'] == "1":
+                return render_template('contaAdmin.html', conta = conta)
+    
 
 @app.route('/deslogar/<delog>')
 def deslogar(delog):
     if (delog == "True"):
         session.clear()
         
-    return render_template('index.html')
+    return redirect('/')
 
 
 if __name__ == '__main__':

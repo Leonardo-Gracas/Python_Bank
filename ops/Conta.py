@@ -1,7 +1,7 @@
 import hashlib
 
 class Conta:
-    def __init__(self, conta, p_nome, u_nome, cpf, email, senha, renda = False, saldo = False, debito = False):
+    def __init__(self, conta, p_nome, u_nome, cpf, email, senha, funcao = False, renda = False, saldo = False, debito = False):
         self.Conta = conta
         
         self.P_nome = p_nome.capitalize()
@@ -12,6 +12,7 @@ class Conta:
         
         self.Senha = hashlib.sha1(senha.encode()).hexdigest()
         
+        self.Funcao = funcao
         self.Renda = renda
         self.Debito = debito
         self.Saldo = saldo

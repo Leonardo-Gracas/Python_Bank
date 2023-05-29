@@ -5,14 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/conta/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contaAdmin/style.css') }}">
 
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
-<script src="../assets/js/conta/index.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/contaAdmin/script.js') }}"></script>
+
 <body>
 
     <main>
@@ -124,6 +125,7 @@
                     <a href="/deslogar/True"><button>Deslogar</button></a>
                     <a href="/"><button>Index</button></a>
                 </div>
+
             </div>
         </div>
     </main>
