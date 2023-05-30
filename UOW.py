@@ -141,15 +141,15 @@ def Passar_Mes():
     # saldo1 = 100 (2/5)
     # saldo2 = 150 (3/5)
     # saldototal = 250
-    # saldo1 = 100/250 = 2/5
-    # saldo1 += renda * 2/5 = 120
+    # parte1 = 100/250 = 2/5
+    # saldo1 += renda * parte1 = 120
 
     renda_user = banco.passar_mes()
     saldo_total = 0
     for user in users:
         saldo_total += user.Saldo
-    print(saldo_total)
 
+    tres_meses_negativo = False
     for user in users:
         print(user.Nome)
         if(saldo_total != 0):
@@ -162,7 +162,9 @@ def Passar_Mes():
                 renda_mes -= user.Debito
                 user.Debito = 0
             user.Depositar(renda_mes, show=False)
-        user.Passar_Mes()
+        if user.Passar_Mes() == tres_meses_negativo:
+            Deletar(str(user.Conta))
+            users.remove(user)
 
     banco.cobrar_anuidade(users)
 

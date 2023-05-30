@@ -26,14 +26,18 @@ class Banco:
 
     def apresentar(self):
         print(f'{self.Nome} --- {self.Agencia}')
-        print(f'Saldo próprio: R${self.Saldo}')
-        print(f'Saldo corrente: R${self.Saldo_Corrente}')
+        print(f'Saldo próprio: R${self.Saldo:.2f}')
+        print(f'Saldo corrente: R${self.Saldo_Corrente:.2f}')
 
     def passar_mes(self):
+        custos = randint(0, 10) * 100
+        self.Saldo -= custos
+        if self.Saldo_Corrente < 0:
+            self.Saldo -= self.Saldo_Corrente
+
         porcentagem_renda = randint(1, 30) / 100
         print(f'{porcentagem_renda:.2f}%')
         parte_banco = self.Saldo_Corrente * porcentagem_renda * (8/10)
         parte_users = self.Saldo_Corrente * porcentagem_renda * (2/10)
-        print(f'R${parte_users}')
         self.Saldo += parte_banco
         return parte_users

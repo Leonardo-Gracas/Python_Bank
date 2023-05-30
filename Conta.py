@@ -5,6 +5,7 @@ class Conta:
         self.Renda = renda
         self.Debito = debito
         self.Saldo = saldo
+        self.Faltas = 0
 
     def Sacar(self, quantia):
         if(self.Saldo < 0):
@@ -20,7 +21,8 @@ class Conta:
     
     def Depositar(self, quantia, show=True):
         if quantia <= 0:
-            print('---Depósito está abaixo do valor mínimo!!---')
+            if show:
+                print('---Depósito está abaixo do valor mínimo!!---')
             return
         self.Saldo += quantia
         if(show):
@@ -89,12 +91,22 @@ class Conta:
             print(f'Débito: R${self.Debito:.2f}')
 
     def Pagar_Anuidade(self):
-        anuidade = 20 + self.Renda * 0.08
+        anuidade = 20 + self.Renda * 0.14
         self.Saldo -= anuidade
         if(self.Saldo < 0): self.Enprestimo(self.Saldo * -1, show=False)
         return anuidade
     
     def Passar_Mes(self):
+        if self.Saldo < 0:
+            self.Faltas += 1
+            print(' x ' * self.Faltas)
+        else:
+            self.Faltas = 0
+        
+        if self.Faltas == 3:
+            print('Acabaram as faltas!!!')
+            return False
+
         self.Depositar(self.Renda)
         limite = self.Renda * 0.6
         juros = (1 + self.Debito/limite) ** 2
