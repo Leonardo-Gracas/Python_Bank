@@ -1,3 +1,7 @@
 {
-  "id_fabric": 103
+  "id_fabric": 105,
+  "nome": "Banco Digital",
+  "agencia": 99,
+  "saldo_banco": 23472.937847058518,
+  "saldo_corrente": 6774.1340389636025
 }

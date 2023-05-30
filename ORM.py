@@ -1,4 +1,5 @@
 from Conta import Conta as Conta
+from Banco import Banco as Banco
 import json
 import os
 
@@ -11,6 +12,9 @@ diretorio_atual = os.path.dirname(caminho_atual)
 
 # Combinar o diretório atual com o nome do arquivo JSON
 caminho_arquivo = os.path.join(diretorio_atual, 'users.json')
+
+# Combinar o diretório atual com o nome do arquivo system.json
+caminho_system = os.path.join(diretorio_atual, 'system.json')
 
 
 def user_to_json(user):
@@ -30,10 +34,10 @@ def json_to_user(json):
 
 class ORM:
     def __init__(self):
-        pass
+        ...
 
     def get_new_id():
-        with open(caminho_arquivo, 'r+') as system:
+        with open(caminho_system, 'r+') as system:
             obj = json.loads(system.read())
             obj['id_fabric'] += 1
             conta = obj['id_fabric']
@@ -86,8 +90,7 @@ class ORM:
             f.seek(0)
             f.write(json.dumps(obj, indent=2))
             f.truncate()
-        return old_user
-        
+        return old_user  
 
     def list():
         resp = []
@@ -103,3 +106,28 @@ class ORM:
             print("-------------------------\n")
         
         return resp
+
+    def get_bank():
+        with open(caminho_system, 'r') as f:
+            data = json.loads(f.read())
+        with open(caminho_arquivo, 'r') as f:
+            users = []
+            users_json = json.loads(f.read())
+            for user_json in users_json:
+                users.append(json_to_user(user_json))
+
+        bank = Banco(data['nome'], data['agencia'], data['saldo_banco'], users)
+        return bank
+    
+    def set_bank(bank):
+        with open(caminho_system, 'w') as f:
+            newData = {
+                "id_fabric": 105,
+                "nome": "Banco Digital",
+                "agencia": 99,
+                "saldo_banco": bank.Saldo,
+                "saldo_corrente": bank.Saldo_Corrente
+            }
+            f.seek(0)
+            f.write(json.dumps(newData, indent=2))
+            f.truncate()

@@ -1,11 +1,39 @@
+from random import randint
+
+
 class Banco:
-    def __init__(self, nome, saldoProprio, saldoCorrente):
+    def __init__(self, nome, agencia, saldoProprio, users):
         self.Nome = nome
-        self.SaldoProprio = saldoProprio
-        self.SalcoCorrente = saldoCorrente
+        self.Agencia = agencia
+        self.Saldo = saldoProprio
+        self.Saldo_Corrente = 0
+        self.calcular_saldo_corrente(users)
 
-    def cobrar_anuidade():
-        ...
+    def cobrar_anuidade(self, users):
+        anuidade_total = 0
+        for user in users:
+            anuidade_total += user.Pagar_Anuidade()
+        self.Saldo += anuidade_total
+        self.calcular_saldo_corrente(users)
+        print(f'Anuidade recolhida de R${anuidade_total:.2f}')
 
-    def calcular_saldo_corrente():
-        ...
+    def calcular_saldo_corrente(self, users):
+        sc = 0
+        for user in users:
+            sc += user.Saldo
+        self.Saldo_Corrente = sc
+        return sc
+
+    def apresentar(self):
+        print(f'{self.Nome} --- {self.Agencia}')
+        print(f'Saldo próprio: R${self.Saldo}')
+        print(f'Saldo corrente: R${self.Saldo_Corrente}')
+
+    def passar_mes(self):
+        porcentagem_renda = randint(1, 30) / 100
+        print(f'{porcentagem_renda:.2f}%')
+        parte_banco = self.Saldo_Corrente * porcentagem_renda * (8/10)
+        parte_users = self.Saldo_Corrente * porcentagem_renda * (2/10)
+        print(f'R${parte_users}')
+        self.Saldo += parte_banco
+        return parte_users

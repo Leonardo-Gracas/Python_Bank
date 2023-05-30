@@ -1,18 +1,19 @@
 from ORM import ORM as orm
 
 users = orm.list()
+banco = orm.get_bank()
 
-def Criar(params=False):
-    global users
-
-    args = ''
-    if(params != False):
-        args = params
-    else:
-        print('---Digite os dados "nome, renda"---')
+def get_args(args, message):
+    if(args == False):
+        print(message)
         args = input('>>> ')
     args = args.lower()
     args = args.split()
+    return args
+
+def Criar(args=False):
+    global users
+    args = get_args(args, '---Digite os dados "nome, renda"---')
 
     nome = args[0]
     renda = float(args[1])
@@ -80,11 +81,7 @@ def Atualizar(args=False):
         ('p', Pagar_Debitos)
     ]
     
-    if(args == False):
-        print('---([D]epositar, [S]acar, [T]ransferir, [P]agar, [E]mpréstimo), Numero da conta, parametros---')
-        args = input('>>> ')
-    args = args.lower()
-    args = args.split()
+    args = get_args(args, '---([D]epositar, [S]acar, [T]ransferir, [P]agar, [E]mpréstimo), Numero da conta, parametros---')
 
     for command in cmd_list:
         if (command[0] == args[0]):
@@ -99,35 +96,22 @@ def Atualizar(args=False):
     orm.update(users)
 
 def Ler(args=False, show=True):
-    if(args == False):
-        print('---Digite o número da conta a ser lida:')
-        args = input('>>> ')
-    args = args.lower()
-    args = args.split()
+    args = get_args(args, '---Digite o número da conta a ser lida:')
 
     response = orm.read(float(args[0]))
     if response == False:
         return
-
     if(show == True):
         print('---------------------')
         response.Apresentar()
         print('---------------------\n')
     
-
     return response
 
-def Deletar(params=False):
+def Deletar(args=False):
     global users
 
-    args = ''
-    if(params != False):
-        args = params
-    else:
-        print('---Digite o número da conta a ser deletada:')
-        args = input('>>> ')
-    args = args.lower()
-    args = args.split()
+    args = get_args(args, '---Digite o número da conta a ser deletada:')
 
     try:
         numConta = int(args[0])
@@ -141,3 +125,46 @@ def Deletar(params=False):
 
 def Listar():
     users = orm.list()
+
+def Apresentar_Banco():
+    banco = orm.get_bank()
+    banco.apresentar()
+
+def Cobrar_Anuidade():
+    banco.cobrar_anuidade(users)
+    orm.update(users)
+    orm.set_bank(banco)
+
+def Passar_Mes():
+    # recebe o valor de rendimento e divide entre os usuários tendo o saldo parado como parâmetro
+    # renda = 300
+    # saldo1 = 100 (2/5)
+    # saldo2 = 150 (3/5)
+    # saldototal = 250
+    # saldo1 = 100/250 = 2/5
+    # saldo1 += renda * 2/5 = 120
+
+    renda_user = banco.passar_mes()
+    saldo_total = 0
+    for user in users:
+        saldo_total += user.Saldo
+    print(saldo_total)
+
+    for user in users:
+        print(user.Nome)
+        if(saldo_total != 0):
+            renda_mes = user.Saldo / saldo_total
+            renda_mes *= renda_user
+            if user.Debito >= renda_mes:
+                renda_mes = 0
+                user.Debito -= renda_mes
+            else:
+                renda_mes -= user.Debito
+                user.Debito = 0
+            user.Depositar(renda_mes, show=False)
+        user.Passar_Mes()
+
+    banco.cobrar_anuidade(users)
+
+    orm.set_bank(banco)
+    orm.update(users)

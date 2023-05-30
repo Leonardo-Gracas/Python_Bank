@@ -18,7 +18,10 @@ command_list = [
     ('add', uow.Criar),
     ('get', uow.Ler),
     ('act', uow.Atualizar),
-    ('del', uow.Deletar)
+    ('del', uow.Deletar),
+    ('bank', uow.Apresentar_Banco),
+    ('collect', uow.Cobrar_Anuidade),
+    ('pass', uow.Passar_Mes)
 ]
 
 while(loop):
