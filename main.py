@@ -1,48 +1,50 @@
-import os
-import UOW as uow
+from flask import *
+import math
+import json
 
-os.system("cls")
+from ops import UOW as uow
+# from ops import ORM as orm
 
-def func():
-    pass
+App = Flask(__name__)
 
-loop = True
-
-def close_loop():
-    global loop
-    loop = False
-
-command_list = [
-    ('x', close_loop),
-    ('list', uow.Listar),
-    ('add', uow.Criar),
-    ('get', uow.Ler),
-    ('act', uow.Atualizar),
-    ('del', uow.Deletar),
-    ('bank', uow.Apresentar_Banco),
-    ('collect', uow.Cobrar_Anuidade),
-    ('pass', uow.Passar_Mes)
-]
-
-while(loop):
+@App.route("/", methods=['GET', 'POST'])
+def index():
+    get = request.args.get('get')
     
-    print('#    #    #    #    #    #')
-    print("Digite o comando:")
-
-    cmd = input(">>> ")
-    cmd = cmd.lower()
-    cmd = cmd.split()
-
-    for command in command_list:
-        if(command[0] == cmd[0]):
-            function = command[1]
-            if (len(cmd) > 1):
-                args = " ".join(cmd[1:])
-                function(args)
-            else:                
-                function()
-            break
+    if get != None:
+        
+        pass
     else:
-        print("Comando Inexistente!")
+        pagina = request.args.get('pagina')
+        
+        if pagina == None:
+            pagina = 1
+        else:
+            pagina = int(pagina)
+            
+        users = uow.Listar()
+        
+        numero_users = len(users)
+        num_pags = math.ceil(numero_users/6)
+        
+        users = users[( 6*(pagina - 1) ):( 6*pagina )]
+        
+        return render_template('index.html', contas=users, num_pags=num_pags, pag_atual = pagina)
     
-    print('#    #    #    #    #    #')
+@App.route('/rotaAjax', methods=['POST'])
+def rota():
+    for i in range(5):
+        print('bbbbbbbbbbbbbbb')
+    dados = request.form['data']
+    dados = dados.loads()
+    
+    result = ajax(dados)
+    return jsonify(result)
+
+def ajax(dados):
+    for i in range(10):
+        print('aaaaaaaaaaaaaaaaaaaaaa')
+    if dados['arg-base'] in 'get':
+        return uow.Ler(dados['id'])
+
+App.run()
