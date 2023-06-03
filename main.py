@@ -6,6 +6,7 @@ from ops import UOW as uow
 # from ops import ORM as orm
 
 App = Flask(__name__)
+# App.debug = True
 
 @App.route("/", methods=['GET', 'POST'])
 def index():
@@ -31,20 +32,16 @@ def index():
         
         return render_template('index.html', contas=users, num_pags=num_pags, pag_atual = pagina)
     
-@App.route('/rotaAjax', methods=['POST'])
-def rota():
-    for i in range(5):
-        print('bbbbbbbbbbbbbbb')
-    dados = request.form['data']
-    dados = dados.loads()
+@App.route('/alt_users', methods=['GET'])
+def alt():
+    pass
     
-    result = ajax(dados)
-    return jsonify(result)
-
-def ajax(dados):
-    for i in range(10):
-        print('aaaaaaaaaaaaaaaaaaaaaa')
-    if dados['arg-base'] in 'get':
-        return uow.Ler(dados['id'])
+    
+@App.route('/rotaAjax', methods=['GET'])
+def minha_rota():
+    id = request.args.get('id')
+    id = int(id)
+    
+    return uow.Ler(id, True)
 
 App.run()

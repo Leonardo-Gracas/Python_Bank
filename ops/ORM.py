@@ -60,11 +60,13 @@ class ORM:
         user.Apresentar()
         return user
 
-    def read(id):
+    def read(id, return_json=False):
         with open(caminho_arquivo, 'r') as f:
             obj = json.loads(f.read())
             for user in obj:
                 if(user['conta'] == id):
+                    if return_json == True:
+                        return user
                     account = json_to_user(user)
                     return account
             else:

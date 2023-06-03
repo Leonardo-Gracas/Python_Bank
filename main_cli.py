@@ -16,10 +16,10 @@ command_list = [
     ('x', close_loop),
     ('list', uow.Listar),
     ('add', uow.Criar),
-    ('get', uow.Ler),
+    # ('get', uow.Ler),
     ('act', uow.Atualizar),
     ('del', uow.Deletar),
-    ('bank', uow.Apresentar_Banco),
+    # ('bank', uow.Apresentar_Banco),
     # ('collect', uow.Cobrar_Anuidade),
     ('pass', uow.Passar_Mes)
 ]

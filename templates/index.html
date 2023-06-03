@@ -13,11 +13,12 @@
 </head>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/index/script.js') }}"></script>
 
 <body>
     <header>
-        <p>Py Bank</p>
+        <p><span>P</span>y <span>B</span>ank</p>
     </header>
 
     <main>
@@ -25,7 +26,7 @@
             <div id="users">
                 <div id="cards-users">
 
-                    <div class="card-user invisivel" id="user-get">
+                    <div class="card-user invisible" id="user-get">
                         <div class="pt-superior-card">
                             <div class="user-icon">
                                 <span class=" iconify" data-icon="mdi:account" data-width="45" data-height="45"></span>
@@ -90,44 +91,68 @@
                 </div>
             </div>
         </section>
-            <form action="/?pagina={{ pag_atual }}" method="post">
-                <input type="hidden" name="arg-base" id="arg-base">
-
-                <input type="hidden" name="nome" id="nome">
-                <input type="hidden" name="renda"  id="renda">
-
-                <input type="hidden" name="idConta1" id="idConta1">
-                <input type="hidden" name="idConta2" id="idConta2">
-
-                <input type="hidden" name="valor" id="valor">
-
-                <div id="botoes">
-                    <div class="card-botao">
-                        <button class="btn" onclick="alt_arg_base('get')">0000000000</button>
-                        <span>Buscar Conta</span>
-                    </div>
-                    <div class="card-botao">
-                        <button class="btn" onclick="alt_arg_base()">0000000000</button>
-                        <span>Serviço</span>
-                    </div>
-                    <div class="card-botao">
-                        <button class="btn" onclick="alt_arg_base()">0000000000</button>
-                        <span>Serviço</span>
-                    </div>
-                    <div class="card-botao">
-                        <button class="btn" onclick="alt_arg_base()">0000000000</button>
-                        <span>Serviço</span>
-                    </div>
-                    <div class="card-botao">
-                        <button class="btn" onclick="alt_arg_base()">0000000000</button>
-                        <span>Serviço</span>
-                    </div>
+        <section>
+            <div id="buttons">
+                <div class="card-botao">
+                    <button class="btn" onclick="alt_arg_base('get')">Buscar</button>
+                    <span>Buscar Conta</span>
                 </div>
-
-            </form>
+                <div class="card-botao">
+                    <button class="btn" onclick="alt_arg_base('list')">Listar</button>
+                    <span>Listar Usúarios</span>
+                </div>
+                <div class="card-botao">
+                    <button class="btn" onclick="alt_arg_base('users')"><a href="/alt_users">Usúarios</a></button>
+                    <span>Bando de Usúarios</span>
+                </div>
+                <div class="card-botao">
+                    <button class="btn" onclick="alt_arg_base('act')">Atualizar</button>
+                    <span>Atualizar</span>
+                </div>
+                <div class="card-botao">
+                    <button class="btn" onclick="alt_arg_base('pass')"><a href="/?pass=true">Passar Mês</a></button>
+                    <span>Passar Mês</span>
+                </div>
+            </div>
         <section>
 
         </section>
+
     </main>
+    <div id="modal">
+        <form action="/?pagina={{ pag_atual }}" method="post">
+            <button onclick="close_modal()">X</button>
+
+            <input type="hidden" name="arg-base" id="arg-base">
+            <input type="hidden" name="arg-act" id="arg-act">
+
+            <div>
+                <div class="dropdown">
+                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Selecione uma opção
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" onclick="alt_arg_act('d')" href="#">Depositar</a>
+                      <a class="dropdown-item" onclick="alt_arg_act('s')" href="#">Sacar</a>
+                      <a class="dropdown-item" onclick="alt_arg_act('t')" href="#">Transferir</a>
+                      <a class="dropdown-item" onclick="alt_arg_act('p')" href="#">Pagar</a>
+                      <a class="dropdown-item" onclick="alt_arg_act('e')" href="#">Empréstimo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <input type="hidden" name="idConta1" id="idConta1">
+
+                <label for="">ID Conta: </label>
+                <input type="number" name="idConta2" id="idConta2">
+
+                <label for="">Valor: </label>
+                <input type="number" name="valor" id="valor">
+            </div>
+
+            <input type="submit" value="Confirmar">
+        </form>
+    </div>
 </body>
 </html>

@@ -95,8 +95,8 @@ def Atualizar(args=False):
                 break
     orm.update(users)
 
-def Ler(id):
-    response = orm.read(id)
+def Ler(id, return_json=False):
+    response = orm.read(id, return_json)
     if response == False:
         return
     
