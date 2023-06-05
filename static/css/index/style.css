@@ -169,6 +169,14 @@ section{
     border: solid 0px black;
 }
 
+.card-botao .btn a{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #buttons .card-botao .active {
     background-color: hsl(133, 32%, 44%);
 }

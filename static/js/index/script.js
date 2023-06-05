@@ -1,7 +1,5 @@
 $(document).ready( () => {
 
-    console.log('aaaaaaaa')
-
     $('.card-user').click( function() {
 
         const cards_user = $('.card-user');
@@ -10,14 +8,15 @@ $(document).ready( () => {
                 $(this).removeClass('selecionado');
                 $('#idConta1').val()
             }
+            
         });
+        id_conta = $(this).find('.id-card').text();
+        
+        $(this).addClass("selecionado");
+        $('#idConta1').val(id_conta)
 
-        if ($('#arg-base').val() != '') {
-            id_conta = $(this).find('.id-card').text();
-
-            $(this).addClass("selecionado");
-            $('#idConta1').val(id_conta)
-        }
+        // if ($('#arg-base').val() != '') {
+        // }
     });
 
     $('button').click( function() {

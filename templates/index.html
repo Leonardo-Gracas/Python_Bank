@@ -124,31 +124,29 @@
             <button onclick="close_modal()">X</button>
 
             <input type="hidden" name="arg-base" id="arg-base">
-            <input type="hidden" name="arg-act" id="arg-act">
 
-            <div>
-                <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Selecione uma opção
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" onclick="alt_arg_act('d')" href="#">Depositar</a>
-                      <a class="dropdown-item" onclick="alt_arg_act('s')" href="#">Sacar</a>
-                      <a class="dropdown-item" onclick="alt_arg_act('t')" href="#">Transferir</a>
-                      <a class="dropdown-item" onclick="alt_arg_act('p')" href="#">Pagar</a>
-                      <a class="dropdown-item" onclick="alt_arg_act('e')" href="#">Empréstimo</a>
-                    </div>
-                </div>
+            <div class="dropdown">
+                <select name="agr-act" required id="">
+                    <option value="">...</option>
+                    <option value="d">Depositar</option>
+                    <option value="s">Sacar</option>
+                    <option value="t">Transferir</option>
+                    <option value="p">Pagar</option>
+                    <option value="e">Empréstimo</option>
+                </select>
             </div>
 
             <div>
-                <input type="hidden" name="idConta1" id="idConta1">
+                <!-- <input type="text" name="" id="" value=""> -->
 
                 <label for="">ID Conta: </label>
-                <input type="number" name="idConta2" id="idConta2">
+                <input type="text" disabled name="idConta1" required value="Selecione uma conta" id="idConta1">
+
+                <label for="">ID Conta: </label>
+                <input type="number" name="idConta2" required id="idConta2">
 
                 <label for="">Valor: </label>
-                <input type="number" name="valor" id="valor">
+                <input type="number" required name="valor" id="valor">
             </div>
 
             <input type="submit" value="Confirmar">

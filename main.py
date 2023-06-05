@@ -6,7 +6,7 @@ from ops import UOW as uow
 # from ops import ORM as orm
 
 App = Flask(__name__)
-# App.debug = True
+App.debug = True
 
 @App.route("/", methods=['GET', 'POST'])
 def index():
@@ -34,7 +34,7 @@ def index():
     
 @App.route('/alt_users', methods=['GET'])
 def alt():
-    pass
+    return render_template('alt_users.html')
     
     
 @App.route('/rotaAjax', methods=['GET'])
