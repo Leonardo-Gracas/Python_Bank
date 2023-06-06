@@ -16,30 +16,30 @@ def index():
         conta1 = request.form['idConta1']
         conta2 = request.form['idConta2']
     
-    # arg_base = request.form['arg-base']
-    # arg_act = request.form['arg_act']
-    
-    # valor = request.form['valor']
-    
-    # if arg_base != None:
-    #     if arg_base in 'act':
-    #         if arg_act in 'd':
-    #             # FUNCAO DEPOSITO
-    #             pass
-    #         elif arg_act in 's':
-    #             # FUNCAO SAQUE
-    #             pass
-    #         elif arg_act in 't':
-    #             # FUNCAO TRANSACAO
-    #             pass
-    #         elif arg_act in 'p':
-    #             # FUNCAO PAGAR
-    #             pass
-    #         elif arg_act in 'e':
-    #             # EMPRESTIMO
-    #             pass
-    #     else: 
-    #         uow.Passar_Mes
+        arg_base = request.form['arg-base']
+        arg_act = request.form['arg_act']
+
+        valor = request.form['valor']
+
+        if arg_base != None:
+            if arg_base in 'act':
+                if arg_act in 'd':
+                    # FUNCAO DEPOSITO
+                    pass
+                elif arg_act in 's':
+                    # FUNCAO SAQUE
+                    pass
+                elif arg_act in 't':
+                    # FUNCAO TRANSACAO
+                    pass
+                elif arg_act in 'p':
+                    # FUNCAO PAGAR
+                    pass
+                elif arg_act in 'e':
+                    # EMPRESTIMO
+                    pass
+            else: 
+                uow.Passar_Mes
     
             
     if get != None:
