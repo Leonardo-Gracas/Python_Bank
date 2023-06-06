@@ -19,6 +19,17 @@ $(document).ready( () => {
         // }
     });
 
+    $('arg-act').change( function() {
+
+        // MUDAR O DISPLAY DO LABEL E DO INPUT DA CONTA 2 AQUI 
+
+        // val = $(this).val()
+
+        // if (val == "d" || val == "s" || val = "e") {
+        //     $()
+        // }
+    });
+
     $('button').click( function() {
 
         $('button').each( function() {
@@ -90,22 +101,22 @@ function enviarFormulario(id) {
 
 // 
 // 
-dados = {
-    'arg-base' : $('#arg-base').val(),
-    // 'nome' : $('#nome').val(),
-    // 'renda' : $('#renda').val(),
-    'id_conta1' : $('#idConta1').val(),
-    'id_conta2' : $('#idConta2').val(),
-    'valor' : $('#valor').val()
-}
+// dados = {
+//     'arg-base' : $('#arg-base').val(),
+//     // 'nome' : $('#nome').val(),
+//     // 'renda' : $('#renda').val(),
+//     'id_conta1' : $('#idConta1').val(),
+//     'id_conta2' : $('#idConta2').val(),
+//     'valor' : $('#valor').val()
+// }
 
-if (dados['arg-base'] == 'get') {
+// if (dados['arg-base'] == 'get') {
 
-    if (dados['id_conta1'] != '') {
+//     if (dados['id_conta1'] != '') {
         
-        $('.card-user').click(function() {
-            enviarFormulario(dados)
-        });
+//         $('.card-user').click(function() {
+//             enviarFormulario(dados)
+//         });
 
-    }
-}
+//     }
+// }

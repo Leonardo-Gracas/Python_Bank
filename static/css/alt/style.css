@@ -37,24 +37,26 @@ header p span{
     color: rgb(31, 31, 31);
 }
 
-header
 
 main{
-    background-color: hsla(28, 67%, 93%, 0.852);
-    width: 100vw;
-}
-
-section{
+    width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 2%;
 }
 
 .left-side{
     width: 50%;
+    height: 500px;
+    background-color: rgb(255, 255, 255);
 }
 
 .right-side{
     width: 50%;
-    background-color: aliceblue;
+    height: 500px;
+    background-color: rgb(193, 199, 204);
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }

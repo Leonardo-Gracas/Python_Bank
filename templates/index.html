@@ -121,29 +121,28 @@
     </main>
     <div id="modal">
         <form action="/?pagina={{ pag_atual }}" method="post">
-            <button onclick="close_modal()">X</button>
+            <div class="btn-close-model" onclick="close_modal()">X</div>
 
             <input type="hidden" name="arg-base" id="arg-base">
 
-            <div class="dropdown">
-                <select name="agr-act" required id="">
-                    <option value="">...</option>
-                    <option value="d">Depositar</option>
-                    <option value="s">Sacar</option>
-                    <option value="t">Transferir</option>
-                    <option value="p">Pagar</option>
-                    <option value="e">Empréstimo</option>
-                </select>
-            </div>
-
             <div>
-                <!-- <input type="text" name="" id="" value=""> -->
+                <div class="dropdown">
+                    <label for="arg-base">Operação de atualização</label>
+                    <select name="arg-act" required id="arg-act">
+                        <option value="">...</option>
+                        <option value="d">Depositar</option>
+                        <option value="s">Sacar</option>
+                        <option value="t">Transferir</option>
+                        <option value="p">Pagar</option>
+                        <option value="e">Empréstimo</option>
+                    </select>
+                </div>
 
-                <label for="">ID Conta: </label>
-                <input type="text" disabled name="idConta1" required value="Selecione uma conta" id="idConta1">
+                <label for="">ID Conta 1: </label>
+                <input type="text" disabled name="idConta1" required value="Selecione uma conta" id="idConta1"><br>
 
-                <label for="">ID Conta: </label>
-                <input type="number" name="idConta2" required id="idConta2">
+                <label for="">ID Conta 2: </label>
+                <input type="number" name="idConta2" required id="idConta2"><br>
 
                 <label for="">Valor: </label>
                 <input type="number" required name="valor" id="valor">

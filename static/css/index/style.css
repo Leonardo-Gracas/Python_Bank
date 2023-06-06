@@ -202,14 +202,29 @@ section{
     background-color: rgb(245, 245, 245);
     border: solid 2px rgba(0, 0, 0, 0.159);
     border-radius: 10px;
+
+    padding: 20px;
 }
 
-#modal button:nth-child(1) {
+#modal form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal .btn-close-model {
     top: 0;
-    float: right;
+    align-self:flex-end;
     background-color: red;
-    padding: 5px;
-    margin-bottom: 5px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border: solid 1px black;
+    cursor: pointer;
 }
 
 #modal input {
@@ -219,7 +234,11 @@ section{
     margin:20px;
 }
 
+#modal input div input{
+    background-color: aqua;
+}
+
 #modal label {
-    font-size: 40px;
+    font-size: 20px;
 }
 

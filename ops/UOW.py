@@ -102,10 +102,11 @@ def Ler(id, return_json=False):
     
     return response
 
-def Deletar(args=False):
+def Deletar(id_conta):
     global users
 
-    args = get_args(args, '---Digite o número da conta a ser deletada:')
+    # args = get_args(args, '---Digite o número da conta a ser deletada:')
+    #a
 
     try:
         numConta = int(args[0])
