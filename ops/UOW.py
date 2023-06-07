@@ -1,7 +1,23 @@
-from .ORM import ORM as orm
+from contextlib import nullcontext
+from ops.ORM import ORM as orm
+from ops.Conta import Conta as Conta
 
 users = orm.list()
 banco = orm.get_bank()
+
+def user_to_json(user):
+    obj = {
+        "conta": user.Conta,
+        "nome": user.Nome,
+        "saldo": user.Saldo,
+        "renda": user.Renda,
+        "debito": user.Debito
+    }
+    return obj
+
+def json_to_user(json):
+    user = Conta(json["conta"], json["nome"], json["renda"], json["saldo"], json["debito"])
+    return user
 
 def get_args(args, message):
     if(args == False):
@@ -11,125 +27,86 @@ def get_args(args, message):
     args = args.split()
     return args
 
-def Criar(args=False):
+def Criar(nome, renda):
     global users
-    args = get_args(args, '---Digite os dados "nome, renda"---')
-
-    nome = args[0]
-    renda = float(args[1])
-    conta = orm.get_new_id()
+    conta = orm.get_new_id() 
     saldo = 0
-    users.append(orm.create(conta, nome, renda, saldo))
+    users.append(orm.create(conta, nome, renda, saldo)) 
 
-def Atualizar(args=False):
-    def Depositar(args):
-        args = args.split()
-        contaId = args[0]
-        valor = float(args[1])
-        conta = Ler(contaId, show=False)
-        conta.Depositar(valor)
-        for index, user in enumerate(users):
-            if(user.Conta == conta.Conta):
-                users[index] = conta
-    
-    def Sacar(args):
-        args = args.split()
-        contaId = args[0]
-        valor = float(args[1])
-        conta = Ler(contaId, show=False)
-        conta.Sacar(valor)
-        for index, user in enumerate(users):
-            if(user.Conta == conta.Conta):
-                users[index] = conta
+def Depositar(contaId, valor):
+    for user in users:
+        if(user.Conta == contaId):
+            message = user.Depositar(valor)
+            orm.update(users)
+            return message
+    else:
+        return "Usuário não encontrado"
 
-    def Transferencia(args):
-        args = args.split()
-        contaId = args[0]
-        valor = float(args[1])
-        destinatario = Ler(args[2], show=False)
-        conta = Ler(contaId, show=False)
-        conta.Transacao(destinatario, valor)
-        for index, user in enumerate(users):
-            if(user.Conta == conta.Conta):
-                users[index] = conta
-        for index, user in enumerate(users):
-            if(user.Conta == destinatario.Conta):
-                users[index] = destinatario
+def Sacar(contaId, valor):
+    for user in users:
+        if(user.Conta == contaId):
+            message = user.Sacar(valor)
+            orm.update(users)
+            return message
+    else:
+        return "Usuário não encontrado"
+
+def Transferencia(contaId, valor, destinatario):
+    for user in users:
+        if(user.Conta == destinatario):
+            destinatario = user
+            break
+    else:
+        return "Destinatario não encontrado"
+    for user in users:
+        if(user.Conta == contaId):
+            message = user.Transacao(valor, destinatario)
+            orm.update(users)
+            return message
+    else:
+        return "Usuário não encontrado"
         
-    def Emprestimo(args):
-        args = args.split()
-        valor = float(args[1])
-        contaId = args[0]
-        conta = Ler(contaId, show=False)
-        conta.Enprestimo(valor)
-        for index, user in enumerate(users):
-            if(user.Conta == conta.Conta):
-                users[index] = conta
+def Emprestimo(contaId, valor):
+    for user in users:
+        if(user.Conta == contaId):
+            message = user.Emprestimo(valor)
+            orm.update(users)
+            return message
+    else:
+        return "Usuário não encontrado"
 
-    def Pagar_Debitos(contaId):
-        conta = Ler(contaId, show=False)
-        conta.PagarDebito()
-        for index, user in enumerate(users):
-            if(user.Conta == conta.Conta):
-                users[index] = conta
+def Pagar_Debitos(contaId):
+    for index, user in enumerate(users):
+        if(user.Conta == contaId):
+            message = user.PagarDebito()
+            orm.update(users)
+            return message
 
-    cmd_list = [
-        ('d', Depositar),
-        ('s', Sacar),
-        ('t', Transferencia),
-        ('e', Emprestimo),
-        ('p', Pagar_Debitos)
-    ]
-    
-    args = get_args(args, '---([D]epositar, [S]acar, [T]ransferir, [P]agar, [E]mpréstimo), Numero da conta, parametros---')
-
-    for command in cmd_list:
-        if (command[0] == args[0]):
-            if(command[0] == args[0]):
-                function = command[1]
-                if (len(args) > 1):
-                    args = " ".join(args[1:])
-                    function(args)
-                else:                
-                    function()
-                break
-    orm.update(users)
-
-def Ler(id, return_json=False):
-    response = orm.read(id, return_json)
-    if response == False:
-        return
-    
+def Ler(id, show=True):
+    response = orm.read(id)
     return response
 
-def Deletar(id_conta):
+def Deletar(contaId):
     global users
-
-    # args = get_args(args, '---Digite o número da conta a ser deletada:')
-    #a
-
-    try:
-        numConta = int(args[0])
-    except:
-        print("---Entrada inválida!---")
-        return
-
-    old = orm.delete(numConta)
-    old.Apresentar()
-    print('---Deletado---')
+    message = orm.delete(contaId)
+    users = orm.list()
+    return f'Usuário {message} deletado!'
 
 def Listar():
     users = orm.list()
-    return users
+    resp = []
+    for user in users:
+        resp.append(user_to_json(user) )
+    return resp
 
 def Apresentar_Banco():
     banco = orm.get_bank()
     banco.apresentar()
 
-# def Cobrar_Anuidade():
-#     banco.cobrar_anuidade(users)
-#     orm.update(users)
-#     orm.set_bank(banco)
+def Cobrar_Anuidade():
+    banco.cobrar_anuidade(users)
+    orm.update(users)
+    orm.set_bank(banco)
 
 def Passar_Mes():
     # recebe o valor de rendimento e divide entre os usuários tendo o saldo parado como parâmetro

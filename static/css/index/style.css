@@ -1,244 +1,132 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    box-sizing: border-box;
 }
 
-a{
-    text-decoration: none;
-    color: black;
-}
-
-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-header{
+html,
+body,
+main {
     width: 100%;
-    height: 80px;
-    background-color: hsl(129, 37%, 36%);
+    overflow: hidden;
+}
+
+#users-list {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-header p{
-    color: white;
-    font-size: 40px;
-    font-family: 'Times New Roman', Times, serif;
-}
-
-header p span{
-    font-family:serif;
-    color: rgb(31, 31, 31);
-}
-
-header
-
-main{
-    background-color: hsla(28, 67%, 93%, 0.852);
-}
-
-section{
-    display: flex;
-    justify-content: center;
-    margin-top: 2%;
-}
-
-#users{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    width: 80%;
-}
-
-#cards-users{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    margin: 8px;
     width: 100%;
 }
 
-.card-user{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 27%;
-    height: 150px;
-    margin-left: 1%;
-    margin-right: 1%;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    background-color: rgb(237, 237, 237);
-    border: solid 1px rgba(0, 0, 0, 0.2);
-}
-
-.invisible{
-    display: none;
-}
-
-.selecionado{
-    background-color: rgb(55, 135, 255);
-}
-
-.pt-superior-card{
-    display: flex;
-    justify-content: center;
-}
-
-.user-icon{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    width: 60px;
-    border-radius: 100px;
-    border: solid 1px rgba(0, 0, 0, 0.189);
-}
-
-.user-icon span{
-    margin: 0 auto;
-    font-size: 80px;
-}
-
-/* .pt-inferior-card {
-    
-} */
-
-.nome-user span{
-    margin-left: 20px;
-}
-
-.id-user span{
-    margin-left: 20px;
-}
-
-#paginacao-contas{
-    display: flex;
-    justify-content: center;
-}
-
-.pag-conta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 36px;
-    width: 36px;
-    border: solid 1px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.pag-conta a{
-    padding: 8px;
-    text-decoration: none;
-    color: black;
-}
-
-#buttons {
-    width: 90%;
-    display: flex;
-    justify-content: center;
-}
-
-#buttons .card-botao{
-    width: 15%;
-    /* height: 100px; */
-    display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-.card-botao .btn {
-    background-color: hsl(132, 72%, 79%);
-    height: 120px;
-    width: 230px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: solid 0px black;
-}
-
-.card-botao .btn a{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#buttons .card-botao .active {
-    background-color: hsl(133, 32%, 44%);
-}
-
-.card-botao span{
-    margin-top: 10px;
+.user {
+    width: 300px;
+    border: 1px solid black;
+    background-color: rgba(0, 255, 0, 0.593);
     font-size: 20px;
-    align-self: center;
-    color: hsl(139, 44%, 15%);
-}
-
-#modal{
-    height: 450px;
-    width: 350px;
-    display: none;
-    position: absolute;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-    align-self: center;
-
-    background-color: rgb(245, 245, 245);
-    border: solid 2px rgba(0, 0, 0, 0.159);
-    border-radius: 10px;
-
-    padding: 20px;
-}
-
-#modal form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#modal .btn-close-model {
-    top: 0;
-    align-self:flex-end;
-    background-color: red;
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    border: solid 1px black;
+    border-radius: 18px;
+    margin: 4px;
+    padding: 8px;
     cursor: pointer;
 }
 
-#modal input {
-    width: 70%;
-    padding: 5px;
+#add-new-user {
+    width: 300px;
+    border: 1px solid black;
+    background-color: rgba(0, 51, 0, 0.093);
     font-size: 20px;
-    margin:20px;
+    border-radius: 18px;
+    margin: 4px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
-#modal input div input{
-    background-color: aqua;
+.overload-active{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.202);
 }
 
-#modal label {
-    font-size: 20px;
+#cadastro {
+    height: 400px;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    background-color: #b4b4b4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+#cadastro-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#cadastro-header button {
+    width: 40px;
+    background-color: rgb(150, 0, 0);
+    color: white;
+    border-top-right-radius: 18px;
+    cursor: pointer;
+}
+
+#cadastro form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 200px;
+    height: 100%;
+}
+
+#cadastro form input[type="submit"] {
+    margin-top: 18px;
+}
+
+.selected-user{
+    height: 400px;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: #b4b4b4;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 18px;
+}
+
+.selected-user .operacoes form{
+    margin-bottom: 20px;
+}
+
+.selected-user .operacoes form input[type="number"]{
+    width: 100px;
+}
+
+.selected-user .base{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.selected-user .base button{
+    width: 90px;
+    height: 30px;
+    background-color: #f3c4c4;
+}

@@ -28,12 +28,6 @@ class Banco:
         print(f'{self.Nome} --- {self.Agencia}')
         print(f'Saldo próprio: R${self.Saldo:.2f}')
         print(f'Saldo corrente: R${self.Saldo_Corrente:.2f}')
-        return {
-            'nome': self.Nome,
-            'agencia': self.Agencia,
-            'saldo': self.Saldo,
-            'saldo': self.Saldo_Corrente,
-        }
 
     def passar_mes(self):
         custos = randint(0, 10) * 100

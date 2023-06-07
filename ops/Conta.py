@@ -9,97 +9,71 @@ class Conta:
 
     def Sacar(self, quantia):
         if(self.Saldo < 0):
-            print("Saque negado! --- Cliente negativado")
-            return 
+            return "Saque negado! --- Cliente negativado"
         
         if(quantia > self.Saldo):
-            print("Saque negado! --- Saldo insuficiente")
-            return 
+            return "Saque negado! --- Saldo insuficiente"
         
         self.Saldo -= quantia
-        print(f"Saque de R${quantia:.2f} realizado por {self.Nome}.")
+        return f"Saque de R${quantia:.2f} realizado por {self.Nome}."
     
     def Depositar(self, quantia, show=True):
         if quantia <= 0:
-            if show:
-                print('---Depósito está abaixo do valor mínimo!!---')
-            return
+            return'---Depósito está abaixo do valor mínimo!!---'
+        
         self.Saldo += quantia
-        if(show):
-            print(f"Depósito de R${quantia:.2f} realizado por {self.Nome}.")
+        return f"Depósito de R${quantia:.2f} realizado por {self.Nome}."
     
-    def Transacao(self, destinatario, quantia):
+    def Transacao(self, quantia, destinatario):
         if(self.Saldo < 0):
-            print("Transação negada! --- Cliente negativado")
+            return "Transação negada! --- Cliente negativado"
         
         if(quantia > self.Saldo):
-            print("Transação negada! --- Saldo insuficiente")
+            return "Transação negada! --- Saldo insuficiente"
         
         if(quantia <= 0):
-            print('---Valor inválido para transação!---')
+            return '---Valor inválido para transação!---'
 
         destinatario.Depositar(quantia, show=False)
         self.Saldo -= quantia
-        print(f"Transação de R${quantia:.2f} feita de {self.Nome} para {destinatario.Nome}")
+        return f"Transação de R${quantia:.2f} feita de {self.Nome} para {destinatario.Nome}"
 
-    def Enprestimo(self, valor, show=True):
+    def Emprestimo(self, valor, show=True):
         limite = self.Renda * 0.6
 
         if(valor > limite):
-            if(show):
-                print("Empréstimo negado! --- Crédito insuficiente")
-                print(f"Valor máximo para conta: R${(limite):.2f}.")
-            return
+            return f"Empréstimo negado! --- Crédito insuficiente Valor máximo para conta: R${(limite):.2f}."
 
 
         if(self.Debito + valor * 1.1 > limite):
             parcial = limite - self.Debito
             if(parcial == 0):
-                if(show):
-                    print("Empréstimo negado! --- Débitos pendentes")
-                return
+                return "Empréstimo negado! --- Débitos pendentes"
             parcial /= 1.1
-            if(show):
-                print(f"Empréstimo parcial de R${parcial:.2f} liberado")
             self.Saldo += parcial
             self.Debito = limite
-            return
+            return f"Empréstimo parcial de R${parcial:.2f} liberado"
         
         self.Debito += valor * 1.1
 
         self.Saldo += valor
 
-        if(show):
-            print("Empréstimo realizado!")
-            print(f"Saldo atual: R${self.Saldo:.2f}")
-            print(f"Débito atual: R${self.Debito:.2f}")
+        return f"Empréstimo de {valor} realizado por {self.Nome} sob débito de {self.Debito}"
 
     def PagarDebito(self):
         if(self.Debito > self.Saldo):
-            print(f"Débito abatido em R${self.Saldo:.2f}. Conta zerada.")
             self.Debito -= self.Saldo
             self.Saldo = 0
-            print(f"Débito restante: R${self.Debito:.2f}.")
+            return f"Débito restante de R${self.Debito:.2f}. Conta zerada"
         else:
-            print(f"Débito de R${self.Debito:.2f} zerado!")
             self.Saldo -= self.Debito
             self.Debito = 0
-
-    def Apresentar(self):
-        return {
-            'id': self.Conta,
-            'nome': self.Nome,
-            'saldo': self.Saldo,
-            'renda': self.Renda,
-        }
-        
-        # if(self.Debito > 0):
-        #     print(f'Débito: R${self.Debito:.2f}')
+            return f"Débito zerado!"
 
     def Pagar_Anuidade(self):
         anuidade = 20 + self.Renda * 0.14
         self.Saldo -= anuidade
-        if(self.Saldo < 0): self.Enprestimo(self.Saldo * -1, show=False)
+        if(self.Saldo < 0): self.Emprestimo(self.Saldo * -1, show=False)
         return anuidade
     
     def Passar_Mes(self):

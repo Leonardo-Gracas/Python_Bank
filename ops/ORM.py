@@ -1,5 +1,5 @@
-from .Conta import Conta as Conta
-from .Banco import Banco as Banco
+from ops.Conta import Conta as Conta
+from ops.Banco import Banco as Banco
 import json
 import os
 
@@ -57,18 +57,14 @@ class ORM:
             f.write(json.dumps(obj, indent=2))
             f.truncate()
         
-        user.Apresentar()
         return user
 
-    def read(id, return_json=False):
+    def read(id):
         with open(caminho_arquivo, 'r') as f:
             obj = json.loads(f.read())
             for user in obj:
                 if(user['conta'] == id):
-                    if return_json == True:
-                        return user
-                    account = json_to_user(user)
-                    return account
+                    return user
             else:
                 print("Usuário não encontrado!")
                 return False
@@ -88,21 +84,20 @@ class ORM:
                 if(user['conta'] == id):
                     obj.remove(user)
                     old_user = json_to_user(user)
-                    break
-            f.seek(0)
-            f.write(json.dumps(obj, indent=2))
-            f.truncate()
-        return old_user  
+                    f.seek(0)
+                    f.write(json.dumps(obj, indent=2))
+                    f.truncate()
+                    return old_user.Nome
+            else: return "Usuário não encontrado"
 
     def list():
         resp = []
         with open(caminho_arquivo, 'r') as f:
             obj = json.loads(f.read())
             for user_json in obj:
-                resp.append(json_to_user(user_json).Apresentar())  # Chamada do método Apresentar()
-
+                resp.append(json_to_user(user_json))
+        
         return resp
-
 
     def get_bank():
         with open(caminho_system, 'r') as f:

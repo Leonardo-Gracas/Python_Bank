@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,142 +15,28 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='js/index/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index/script.jsx') }}"></script>
 
 <body>
     <header>
-        <p><span>P</span>y <span>B</span>ank</p>
+        <h1>PyBank</h1>
     </header>
 
     <main>
-        <section>
-            <div id="users">
-                <div id="cards-users">
-
-                    <div class="card-user invisible" id="user-get">
-                        <div class="pt-superior-card">
-                            <div class="user-icon">
-                                <span class=" iconify" data-icon="mdi:account" data-width="45" data-height="45"></span>
-                            </div>
-                        </div>
-                        <div class="pt-inferior-card">
-                            <div class="id-user">
-                                <span>Nº Conta: </span>
-                                <span id="get-id"></span>
-                            </div>
-                            <div class="nome-user">
-                                <span>Nome: </span>
-                                <span id="get-nome"></span>
-                            </div>
-                            <div class="rend-user">
-                                <span>Nº Conta: </span>
-                                <span id="get-renda"></span>
-                            </div>
-                            <div class="saldo-user">
-                                <span>Nº Conta: </span>
-                                <span id="get-saldo"></span>
-                            </div>
-                            
-                        </div>
-                    </div> 
-
-                    {% for conta in contas %}
-    
-                    <div class="card-user">
-                        <div class="pt-superior-card">
-                            <div class="user-icon">
-                                <span class=" iconify" data-icon="mdi:account" data-width="45" data-height="45"></span>
-                            </div>
-                        </div>
-                        <div class="pt-inferior-card">
-                            <div class="nome-user">
-                                <span>Nome: </span>
-                                <span class="nome-card">{{ conta['nome'] }}</span>
-                            </div>
-                            <div class="id-user">
-                                <span>Nº Conta: </span>
-                                <span class="id-card">{{ conta['id'] }}</span>
-                            </div>
-                        </div>
-                    </div>     
-                    
-                    {% endfor %}
-    
-                    
+        <div id="users-list">
+            {% for user in users %}
+                <div class="user">
+                    <p>{{ user.nome }}</p>
+                    <p>{{ user.conta }}</p>
                 </div>
-
-                <div id="paginacao-contas">
-    
-                    {% for pag in range(0, num_pags) %}
-    
-                        <div class="pag-conta">
-                            <a href="/?pagina={{ pag + 1 }}">{{ pag + 1 }}</a>
-                        </div>
-    
-                    {% endfor %}
-    
-                </div>
+            {% endfor %}
+            <div id="add-new-user">
+                <p>Adicionar</p>
             </div>
-        </section>
-        <section>
-            <div id="buttons">
-                <div class="card-botao">
-                    <button class="btn" onclick="alt_arg_base('get')">Buscar</button>
-                    <span>Buscar Conta</span>
-                </div>
-                <div class="card-botao">
-                    <button class="btn" onclick="alt_arg_base('list')">Listar</button>
-                    <span>Listar Usúarios</span>
-                </div>
-                <div class="card-botao">
-                    <button class="btn" onclick="alt_arg_base('users')"><a href="/alt_users">Usúarios</a></button>
-                    <span>Bando de Usúarios</span>
-                </div>
-                <div class="card-botao">
-                    <button class="btn" onclick="alt_arg_base('act')">Atualizar</button>
-                    <span>Atualizar</span>
-                </div>
-                <div class="card-botao">
-                    <button class="btn" onclick="alt_arg_base('pass')"><a href="/?pass=true">Passar Mês</a></button>
-                    <span>Passar Mês</span>
-                </div>
-            </div>
-        <section>
-
-        </section>
-
+        </div>
     </main>
-    <div id="modal">
-        <form action="/?pagina={{ pag_atual }}" method="post">
-            <div class="btn-close-model" onclick="close_modal()">X</div>
+    <div id="overloads"></div>
 
-            <input type="hidden" name="arg-base" id="arg-base">
-
-            <div>
-                <div class="dropdown">
-                    <label for="arg-base">Operação de atualização</label>
-                    <select name="arg-act" required id="arg-act">
-                        <option value="">...</option>
-                        <option value="d">Depositar</option>
-                        <option value="s">Sacar</option>
-                        <option value="t">Transferir</option>
-                        <option value="p">Pagar</option>
-                        <option value="e">Empréstimo</option>
-                    </select>
-                </div>
-
-                <label for="">ID Conta 1: </label>
-                <input type="text" disabled name="idConta1" required value="Selecione uma conta" id="idConta1"><br>
-
-                <label for="">ID Conta 2: </label>
-                <input type="number" name="idConta2" required id="idConta2"><br>
-
-                <label for="">Valor: </label>
-                <input type="number" required name="valor" id="valor">
-            </div>
-
-            <input type="submit" value="Confirmar">
-        </form>
-    </div>
 </body>
+
 </html>
