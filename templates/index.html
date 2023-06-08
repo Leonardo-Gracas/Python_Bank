@@ -19,16 +19,30 @@
 
 <body>
     <header>
-        <h1>PyBank</h1>
+        <h1>Digital Bank</h1>
     </header>
 
     <main>
+        <div id="bank">
+            <div class="saldo_banco">
+                <p>Saldo Banco</p>
+                <p id="Saldo">R$: ${bank.saldo_banco.toFixed(2)}</p>
+            </div>
+            <div class="saldo_corrente">
+                <p>Saldo Corrente</p>
+                <p id="Saldo-Corrente">R$: ${bank.saldo_corrente.toFixed(2)}</p>
+            </div>
+            <div class="additional-content">
+                <p class="date">Maio de 2023</p>
+                <button id="PassarMes">Passar Mês =></button>
+            </div>
+        </div>
         <div id="users-list">
             {% for user in users %}
-                <div class="user">
-                    <p>{{ user.nome }}</p>
-                    <p>{{ user.conta }}</p>
-                </div>
+            <div class="user">
+                <p>{{ user.nome }}</p>
+                <p>{{ user.conta }}</p>
+            </div>
             {% endfor %}
             <div id="add-new-user">
                 <p>Adicionar</p>

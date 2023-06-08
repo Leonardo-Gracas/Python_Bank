@@ -1,4 +1,5 @@
 from contextlib import nullcontext
+import json
 from ops.ORM import ORM as orm
 from ops.Conta import Conta as Conta
 
@@ -99,9 +100,15 @@ def Listar():
         resp.append(user_to_json(user) )
     return resp
 
-def Apresentar_Banco():
+def Pegar_Banco():
     banco = orm.get_bank()
-    banco.apresentar()
+    response = {
+        "nome": banco.Nome,
+        "agencia": banco.Agencia,
+        "saldo": banco.Saldo,
+        "saldoCorrente": banco.Saldo_Corrente
+    }
+    return response
 
 def Cobrar_Anuidade():
     banco.cobrar_anuidade(users)
@@ -143,3 +150,4 @@ def Passar_Mes():
 
     orm.set_bank(banco)
     orm.update(users)
+    return "Sucesso"

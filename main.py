@@ -10,7 +10,10 @@ def index():
 
 @app.route('/listar', methods=["GET"])
 def listar():
-    return uow.Listar()
+    response = []
+    response.append(uow.Pegar_Banco())
+    response.append(uow.Listar())
+    return jsonify(response)
 
 @app.route('/add-user', methods=["POST"])
 def criar():
@@ -79,6 +82,11 @@ def deletar():
     userId = int(data.get('id'))
     message = uow.Deletar(userId)
     response = {"message": message}
+    return jsonify(response)
+
+@app.route('/passar-mes', methods=["GET"])
+def passarMes():
+    response = uow.Passar_Mes()
     return jsonify(response)
 
 if __name__ == '__main__':

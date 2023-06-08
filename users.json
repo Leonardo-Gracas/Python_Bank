@@ -2,15 +2,15 @@
   {
     "conta": 112,
     "nome": "Alex",
-    "saldo": 112.69999999999999,
+    "saldo": 42195.568701630946,
     "renda": 2500,
-    "debito": 0
+    "debito": 0.0
   },
   {
-    "conta": 113,
-    "nome": "Leo",
-    "saldo": 0,
-    "renda": 2000,
-    "debito": 0
+    "conta": 114,
+    "nome": "Mariana",
+    "saldo": 16489.705282329414,
+    "renda": 1000,
+    "debito": 0.0
   }
 ]

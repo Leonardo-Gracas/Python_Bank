@@ -11,22 +11,80 @@ main {
     overflow: hidden;
 }
 
+header {
+    width: 100%;
+    background-color: #006400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    color: #fff;
+}
+
+#bank {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    line-height: 40px;
+    margin-top: 30px;
+}
+
+.saldo_corrente,
+.saldo_banco {
+    text-align: center;
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    color: #163921;
+    justify-content: center;
+}
+
+.additional-content {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}
+
+#PassarMes {
+    background-color: #005500;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 #users-list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     margin: 8px;
     width: 100%;
 }
 
 .user {
-    width: 300px;
-    border: 1px solid black;
-    background-color: rgba(0, 255, 0, 0.593);
-    font-size: 20px;
-    border-radius: 18px;
+    width: 270px;
     margin: 4px;
-    padding: 8px;
     cursor: pointer;
+
+    background-color: #005500;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid #0000 2px;
+    border-radius: 30px;
 }
 
 #add-new-user {
@@ -43,7 +101,7 @@ main {
     cursor: pointer;
 }
 
-.overload-active{
+.overload-active {
     position: fixed;
     top: 0;
     left: 0;
@@ -95,7 +153,7 @@ main {
     margin-top: 18px;
 }
 
-.selected-user{
+.selected-user {
     height: 400px;
     width: 300px;
     position: fixed;
@@ -112,20 +170,20 @@ main {
     padding: 18px;
 }
 
-.selected-user .operacoes form{
+.selected-user .operacoes form {
     margin-bottom: 20px;
 }
 
-.selected-user .operacoes form input[type="number"]{
+.selected-user .operacoes form input[type="number"] {
     width: 100px;
 }
 
-.selected-user .base{
+.selected-user .base {
     display: flex;
     justify-content: space-evenly;
 }
 
-.selected-user .base button{
+.selected-user .base button {
     width: 90px;
     height: 30px;
     background-color: #f3c4c4;
