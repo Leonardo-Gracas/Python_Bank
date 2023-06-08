@@ -1,13 +1,17 @@
 function getSelectedModel(item) {
-    return `<div class="selected-user" id="selected-${item.conta}"><div class="apresentacao">    <p id="Conta">${item.conta}</p>    <p id="Nome">${item.nome}</p><p id="Saldo">R$ ${item.saldo.toFixed(2)}</p><p id="Debito">R$ ${item.debito.toFixed(2)}</p></div><div class="operacoes"><form id="operacao-saque"><label for="valor">R$</label><input required type="number" name="valor"><input type="submit" name="sacar" value="Sacar"></form><form id="operacao-deposito"><label for="valor">R$</label><input required type="number" name="valor"><input type="submit" name="depositar" value="Depositar"></form><form id="operacao-transferencia"><label for="valor">R$</label><input required type="number" name="valor"><label for="conta">Para:</label><input required type="number" name="conta"><input type="submit" name="transferencia" value="Transferir"></form><form id="operacao-emprestimo"><label for="valor">R$</label><input required type="number" name="valor"><input type="submit" name="emprestimo" value="Empréstimo"></form><form id="operacao-pagar-debito"><input type="submit" name="pagar-debito" value="Pagar débitos"></form></div><div class="base"><button id="retornar-para-main">Voltar</button><button id="deletar-user">Deletar User</button></div></div>`
+    return `<div class="selected-user" id="selected-${item.conta}"><div id="topo"><button id="close-tab">X</button></div><div class="selected-header"><img src="./static/css/index/image/user.png" alt="Profile 1"><div class="apresentacao"><p id="Conta">${item.conta}</p><p id="Nome">${item.nome}</p><p id="Saldo">Saldo: R$${item.saldo.toFixed(2)}</p><p id="Debito">Debito: R$${item.debito.toFixed(2)}</p><p id="Renda-User">Renda: R$${item.renda.toFixed(2)}</div></div><div class="operacoes"><form id="operacao-saque"><label for="valor">R$</label><input required type="number" step="0.01" name="valor"><input type="submit" name="sacar" value="Sacar"></form><form id="operacao-deposito"><label for="valor">R$</label><input required type="number" step="0.01" name="valor"><input type="submit" name="depositar" value="Depositar"></form><form id="operacao-emprestimo"><label for="valor">R$</label><input required type="number" step="0.01" name="valor"><input type="submit" name="emprestimo" value="Empréstimo"></form>    <form id="operacao-transferencia"><label for="valor">R$</label><input required type="number" step="0.01" name="valor"><label for="conta">Para:</label><input required type="number" step="0.01" name="conta"><input type="submit" name="transferencia" value="Transferir"></form><form id="operacao-pagar-debito"><input type="submit" name="pagar-debito" value="Pagar débitos"></form></div><div class="base"><button id="deletar-user">Deletar User</button></div></div>`
 }
 
 function getUserModel(element) {
-    return `<div class="user" id="${element.conta}"><p id="conta">${element.conta}</p><p>${element.nome}</p><p>Saldo: R$${element.saldo.toFixed(2)}</div>`
+    return `<div class="user" id="${element.conta}"><img src="./static/css/index/image/user.png" alt="Profile 1"><div class="user-text"><p id="conta">${element.conta}</p><p>${element.nome}</p><p>Saldo: R$${element.saldo.toFixed(2)}</p></div></div>`
 }
 
 function getBankModel(bank) {
     return `<div class="saldo_banco"><p>Saldo Banco</p><p id="Saldo">R$: ${bank.saldo.toFixed(2)}</p></div><div class="saldo_corrente"><p>Saldo Corrente</p><p id="Saldo-Corrente">R$: ${bank.saldoCorrente.toFixed(2)}</p></div><div class="additional-content"><p class="date">Maio de 2023</p><button id="PassarMes">Passar Mês =></button></div>`
+}
+
+function getAddUserModel(){
+    return `<div id="cadastro"><div id="cadastro-header"><button id="close-tab">X</button></div><img src="./static/css/index/image/user.png" alt="Profile 1"><form id="add-user"><label for="add-user-nome">Nome:</label><input required type="text" name="add-user-nome" id="add-user-nome"><label for="add-user-renda">Renda: R$</label><input required type="number" step="0.01" name="add-user-renda" id="add-user-renda"><input type="submit" name="enviar" id="add-user-enviar"></form>`
 }
 
 $(document).ready(() => {
@@ -23,7 +27,7 @@ $(document).ready(() => {
                 response[1].forEach(element => {
                     content += getUserModel(element)
                 })
-                content += `<div id="add-new-user"><p>Adicionar</p></div>`
+                content += `<div id="add-new-user"><p>+</p></div>`
                 $('#users-list').html(content)
 
                 //
@@ -42,7 +46,7 @@ $(document).ready(() => {
                                 content = getSelectedModel(item)
                                 $('#overloads').html(content)
                                 $('#overloads').addClass('overload-active')
-                                $('#retornar-para-main').click(function () {
+                                $('#close-tab').click(function () {
                                     $('#overloads').html('')
                                     $('#overloads').removeClass('overload-active')
                                 })
@@ -57,7 +61,7 @@ $(document).ready(() => {
                 //
                 $('#add-new-user').each(function () {
                     $(this).click(function () {
-                        $('#overloads').html(`<div id="cadastro"><div id="cadastro-header"><button id="close-tab">X</button></div><form id="add-user"><label for="add-user-nome">Nome:</label><input required type="text" name="add-user-nome" id="add-user-nome"><label for="add-user-renda">Renda:</label><input required type="number" name="add-user-renda" id="add-user-renda"><input type="submit" name="enviar" id="add-user-enviar"></form></div>`)
+                        $('#overloads').html(getAddUserModel())
                         $('#overloads').addClass('overload-active')
                         $('#close-tab').click(function () {
                             $('#overloads').html('')
@@ -67,8 +71,8 @@ $(document).ready(() => {
                         $('#add-user').submit(function (event) {
                             event.preventDefault()
 
-                            let nome = $('input[name="add-user-nome"]').val()
-                            let renda = Number($('input[name="add-user-renda"]').val())
+                            let nome = $('#add-user-nome').val()
+                            let renda = Number($('#add-user-renda').val())
 
                             let data = {
                                 "nome": nome,
@@ -119,7 +123,7 @@ $(document).ready(() => {
                 content = getSelectedModel(item)
                 $('#overloads').html(content)
                 $('#overloads').addClass('overload-active')
-                $('#retornar-para-main').click(function () {
+                $('#close-tab').click(function () {
                     $('#overloads').html('')
                     $('#overloads').removeClass('overload-active')
                 })

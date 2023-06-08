@@ -10,7 +10,7 @@
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
-    <title>Document</title>
+    <title>Python Bank</title>
 </head>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,7 +21,6 @@
     <header>
         <h1>Digital Bank</h1>
     </header>
-
     <main>
         <div id="bank">
             <div class="saldo_banco">
@@ -37,19 +36,29 @@
                 <button id="PassarMes">Passar Mês =></button>
             </div>
         </div>
+        <hr>
         <div id="users-list">
             {% for user in users %}
-            <div class="user">
-                <p>{{ user.nome }}</p>
-                <p>{{ user.conta }}</p>
+            <div class="user" id="${element.conta}">
+                <img src="./static/css/index/image/user.png" alt="Profile 1">
+                <div class="user-text">
+                    <p id="conta">${element.conta}</p>
+                    <p>${element.nome}</p>
+                    <p>Saldo: R$${element.saldo.toFixed(2)}</p>
+                </div>
             </div>
             {% endfor %}
             <div id="add-new-user">
-                <p>Adicionar</p>
+                <img src="../static/css/index/image/add_icon.png" alt="add icon">
             </div>
         </div>
     </main>
     <div id="overloads"></div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2023 Bank Digital. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
 </body>
 
