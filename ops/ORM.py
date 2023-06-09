@@ -112,9 +112,11 @@ class ORM:
         return bank
     
     def set_bank(bank):
-        with open(caminho_system, 'w') as f:
+        with open(caminho_system, 'r+') as f:
+            obj = json.loads(f.read())
+            currentId = obj["id_fabric"]
             newData = {
-                "id_fabric": 105,
+                "id_fabric": currentId,
                 "nome": "Banco Digital",
                 "agencia": 99,
                 "saldo_banco": bank.Saldo,
